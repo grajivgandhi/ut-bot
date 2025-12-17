@@ -5,7 +5,14 @@ import time
 import logging
 
 from config.settings import *
-from config.secrets import API_KEY, API_SECRET
+import os
+
+API_KEY = os.getenv("aFoUhKhs9zqVF9PY0rikR6HNQ5mMOuZeCuVaTtV62bLaMLd3pcPNaWNmI9uzQPLC")
+API_SECRET = os.getenv("J5Xi2KPlbrcjLRH3Uw2tDuNCqPzoFOdlRIIKUSFIVK4Av9FtIIwr9BZAHX7QVJYR")
+
+if not API_KEY or not API_SECRET:
+    raise RuntimeError("API keys not found in environment variables")
+
 
 from core.binance_client import get_client
 from core.data_loader import get_klines_df
