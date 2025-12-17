@@ -1,0 +1,186 @@
+# FREE Deployment - Render Setup (Recommended)
+# Cost: $0 | Setup: 5 minutes | Uptime: 24/7
+
+## STEP 1: Create GitHub Account (1 minute)
+# Go to: https://github.com/signup
+# - Email: your@email.com
+# - Password: anything secure
+# - Username: anything you want
+# Then verify email
+
+## STEP 2: Create GitHub Repository (2 minutes)
+# Log in to GitHub
+# Click "+" icon (top right)
+# Select "New repository"
+# Name: ut-bot
+# Description: UT Bot trading bot
+# Visibility: Public (free)
+# Click "Create repository"
+
+## STEP 3: Push Your Code to GitHub (2 minutes)
+# Open PowerShell in your bot folder:
+
+cd "C:\Users\Manigandan G\OneDrive\Desktop\Rajiv Gandhi\UT BOT\bot_02"
+
+git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
+
+git init
+git add .
+git commit -m "Initial commit: UT Bot trading bot"
+
+# REPLACE YOUR_USERNAME with your GitHub username
+git remote add origin https://github.com/YOUR_USERNAME/ut-bot.git
+git branch -M main
+git push -u origin main
+
+# Enter your GitHub username and password (or personal access token)
+
+## STEP 4: Create Render Account (1 minute)
+# Go to: https://render.com
+# Click "Sign up"
+# Choose "Continue with GitHub"
+# Click "Authorize render"
+# Done!
+
+## STEP 5: Deploy Your Bot (2 minutes)
+# Log into https://render.com/dashboard
+# Click "New +" button (top right)
+# Select "Web Service"
+# 
+# Find your ut-bot repository and click "Connect"
+# 
+# Fill in the form:
+#   Name: ut-bot-trading
+#   Root Directory: (leave blank)
+#   Runtime: Python 3
+#   Build Command: pip install -r requirements.txt
+#   Start Command: python main.py
+#
+# Click "Advanced" to expand options
+# 
+# Scroll down to "Environment"
+# Add these variables:
+#   
+#   API_KEY = your_actual_binance_api_key
+#   API_SECRET = your_actual_binance_api_secret
+#
+# IMPORTANT: Use your NEW API keys, not the old exposed ones!
+#
+# Click "Create Web Service"
+# 
+# Wait 2-3 minutes for deployment
+# You'll see: "Your service is live!"
+
+## STEP 6: Monitor Your Bot
+# Go to: https://render.com/dashboard
+# Click on "ut-bot-trading"
+# You'll see:
+#   - Real-time logs
+#   - Service status (green = running)
+#   - Restart button (if needed)
+#   - Environment variables
+
+## STEP 7: Update Bot Code (if needed)
+# Make changes locally, then:
+
+git add .
+git commit -m "Update description"
+git push origin main
+
+# Render auto-redeploys within 1-2 minutes!
+
+---
+
+## ✅ Success Indicators
+
+Your bot is running when you see in Render logs:
+"Starting bot_02 - multi-symbol UT Bot (30m) - Compounding Mode"
+
+No errors = bot is trading!
+
+---
+
+## ⚠️ CRITICAL: API Keys
+
+1. Go to Binance > Account > API Management
+2. DELETE the old exposed keys (from code comments)
+3. Create NEW API keys:
+   - Name: "Render Bot"
+   - Restrictions:
+     - Enable Spot Trading: NO
+     - Enable Margin Trading: NO
+     - Enable Futures Trading: YES
+     - Withdrawal: OFF (IMPORTANT!)
+4. Copy the key and secret
+5. Add to Render dashboard
+
+---
+
+## Quick Commands Reference
+
+# View logs live
+# Go to Render dashboard > Logs tab
+
+# Restart bot
+# Go to Render dashboard > "Restart Service" button
+
+# Stop bot
+# Go to Render dashboard > "Stop Service" button
+
+# Update code
+git push origin main
+
+# Check git status
+git status
+
+---
+
+## 24/7 Free Hosting
+
+Render Free Tier:
+
+Cost: $0 forever
+This file was moved to `archive/deployment/RENDER_FREE_SETUP.txt`.
+
+If you need the original instructions restored, copy the file from `archive/deployment/RENDER_FREE_SETUP.txt` back to the project root.
+---
+
+## Troubleshooting
+
+Bot won't start?
+1. Check API_KEY and API_SECRET in Render environment
+2. Check logs for error messages
+3. Verify API keys are correct on Binance
+4. Click "Restart Service" in Render
+
+Bot is slow?
+- Normal on free tier (shared CPU)
+- Trading bot doesn't need high speed
+- Processes one candle per interval
+
+Bot disappeared?
+- Render may restart monthly (brief)
+- It auto-restarts
+- Check Render dashboard for status
+
+---
+
+## Next Steps
+
+1. ✅ Create GitHub account
+2. ✅ Push code to GitHub
+3. ✅ Create Render account
+4. ✅ Deploy from GitHub
+5. ✅ Add API keys to Render
+6. ✅ Monitor dashboard
+7. ✅ Watch your bot trade 24/7 for FREE!
+
+---
+
+## Summary
+
+GitHub: FREE
+Render: FREE
+Binance API: FREE
+Your Bot: 24/7 for $0/month 🎉

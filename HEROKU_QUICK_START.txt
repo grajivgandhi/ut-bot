@@ -1,0 +1,85 @@
+# Heroku Quick Start - Copy & Paste Commands
+
+## 1. Install Heroku CLI
+# Download from: https://devcenter.heroku.com/articles/heroku-cli
+# Verify: heroku --version
+## 2. Login
+heroku login
+
+## 3. Create GitHub Repo (if not exists)
+cd "C:\Users\Manigandan G\OneDrive\Desktop\Rajiv Gandhi\UT BOT\bot_02"
+git init
+git config user.name "Your Name"
+git config user.email "your@email.com"
+git add .
+git commit -m "Initial commit"
+# Create repo on GitHub.com, then:
+git remote add origin https://github.com/YOUR_USERNAME/ut-bot.git
+git branch -M main
+git push -u origin main
+
+heroku create ut-bot-trading
+
+## 5. Set API Keys (REPLACE WITH YOUR ACTUAL KEYS!)
+heroku config:set API_KEY=aFoUhKhs9zqVF9PY0rikR6HNQ5mMOuZeCuVaTtV62bLaMLd3pcPNaWNmI9uzQPLC
+heroku config:set API_SECRET=J5Xi2KPlbrcjLRH3Uw2tDuNCqPzoFOdlRIIKUSFIVK4Av9FtIIwr9BZAHX7QVJYR
+
+## 6. Verify Config
+heroku config
+
+## 7. Deploy
+git push heroku main
+
+## 8. Start Worker
+heroku ps:scale worker=1
+
+## 9. View Logs
+heroku logs --tail
+
+## 10. Stop Bot (if needed)
+heroku ps:scale worker=0
+## 11. Restart Bot
+This file was moved to `archive/deployment/HEROKU_QUICK_START.txt`.
+
+If you want to permanently delete the archived copy, remove `archive/deployment/HEROKU_QUICK_START.txt`.
+
+---
+
+## IMPORTANT SECURITY NOTES:
+
+⚠️  API Keys above are EXPOSED - DEACTIVATE them immediately!
+    Go to Binance API Management and delete those keys!
+
+✅ Use your NEW API keys with Heroku:
+   heroku config:set API_KEY=new_key API_SECRET=new_secret
+
+✅ Whitelist Heroku in Binance API settings (IP Restriction)
+   - Or leave IP empty for testing
+   - Will show Heroku IP in bot logs
+
+✅ Never commit real API keys to Git!
+
+---
+
+## Troubleshooting:
+
+# Check if bot is running
+heroku ps
+
+# View last 100 log lines
+heroku logs --num=100
+
+# Filter errors
+heroku logs --grep ERROR
+
+# Restart bot
+heroku restart
+
+# Update code and redeploy
+git add .
+git commit -m "Update message"
+git push heroku main
+
+---
+
+See HEROKU_DEPLOYMENT.md for detailed guide.

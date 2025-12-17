@@ -1,0 +1,14 @@
+# Git ignore - prevent committing secrets
+config/secrets.py
+.env
+.env.local
+*.log
+__pycache__/
+.DS_Store
+.venv/
+venv/
+*.pyc
+.idea/
+.vscode/
+node_modules/
+archive/
