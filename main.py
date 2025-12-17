@@ -7,8 +7,8 @@ import logging
 from config.settings import *
 import os
 
-API_KEY = os.getenv("aFoUhKhs9zqVF9PY0rikR6HNQ5mMOuZeCuVaTtV62bLaMLd3pcPNaWNmI9uzQPLC")
-API_SECRET = os.getenv("J5Xi2KPlbrcjLRH3Uw2tDuNCqPzoFOdlRIIKUSFIVK4Av9FtIIwr9BZAHX7QVJYR")
+API_KEY = os.getenv("API_KEY")
+API_SECRET = os.getenv("API_SECRET")
 
 if not API_KEY or not API_SECRET:
     raise RuntimeError("API keys not found in environment variables")
