@@ -1,8 +1,17 @@
-from binance.client import Client
-from config.secrets import API_KEY, API_SECRET
-
+import os
+import ccxt
 
 def get_client():
-    """Return a Binance client using API keys from config.secrets."""
-    client = Client(API_KEY, API_SECRET)
-    return client
+    api_key = os.getenv("API_KEY")
+    api_secret = os.getenv("API_SECRET")
+
+    if not api_key or not api_secret:
+        raise RuntimeError("API_KEY or API_SECRET not found in environment variables")
+
+    exchange = ccxt.binance({
+        "apiKey": api_key,
+        "secret": api_secret,
+        "enableRateLimit": True,
+    })
+
+    return exchange
