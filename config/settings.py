@@ -15,3 +15,9 @@ TAKE_PROFIT_PCT = 0.05   # Fraction of account balance to target as TP per trade
 
 # Select exchange: 'binance' or 'bybit' (can be overridden with EXCHANGE env var)
 EXCHANGE = "bybit"
+
+# Bybit testnet/demo flags (can be overridden with env vars)
+BYBIT_TESTNET = False
+# When placing demo orders via `core.bybit_demo`, set this to a small positive number
+BYBIT_DEMO_QTY = 0.0
+BYBIT_PLACE_ORDER = False
