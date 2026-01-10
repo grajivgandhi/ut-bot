@@ -53,6 +53,54 @@ class BybitWrapper:
         t = self.exchange.fetch_ticker(sym)
         return {'price': str(t.get('last') or t.get('close') or 0)}
 
+    def futures_klines(self, symbol, interval, limit=300):
+        """Return klines in Binance-style list format used by get_klines_df.
+
+        Each row: [open_time, open, high, low, close, volume, close_time,
+        quote_volume, trades, taker_base, taker_quote, ignore]
+        """
+        sym = self._to_ccxt_symbol(symbol)
+        # ccxt expects timeframe like '1m', '1h', '1d' which aligns with the bot settings
+        tf = interval
+        try:
+            ohlcv = self.exchange.fetch_ohlcv(sym, timeframe=tf, limit=limit)
+        except Exception as e:
+            logging.info("fetch_ohlcv failed: %s", e)
+            raise
+
+        # helper to parse timeframe to milliseconds
+        def _tf_ms(tstr: str) -> int:
+            try:
+                if tstr.endswith('m'):
+                    return int(tstr[:-1]) * 60 * 1000
+                if tstr.endswith('h'):
+                    return int(tstr[:-1]) * 60 * 60 * 1000
+                if tstr.endswith('d'):
+                    return int(tstr[:-1]) * 24 * 60 * 60 * 1000
+            except Exception:
+                pass
+            return 60 * 1000
+
+        span = _tf_ms(tf)
+        rows = []
+        for item in ohlcv:
+            # ccxt: [timestamp(ms), open, high, low, close, volume]
+            open_time = int(item[0])
+            open_p = float(item[1])
+            high_p = float(item[2])
+            low_p = float(item[3])
+            close_p = float(item[4])
+            vol = float(item[5])
+            close_time = open_time + span
+            # best-effort placeholders for Binance fields not provided by ccxt
+            quote_vol = 0.0
+            trades = 0
+            taker_base = 0.0
+            taker_quote = 0.0
+            ignore = None
+            rows.append([open_time, open_p, high_p, low_p, close_p, vol, close_time, quote_vol, trades, taker_base, taker_quote, ignore])
+        return rows
+
     def futures_exchange_info(self):
         markets = self.exchange.fetch_markets()
         symbols = []
@@ -88,7 +136,10 @@ class BybitWrapper:
             # ccxt provides set_leverage in some implementations
             return self.exchange.set_leverage(leverage, self._to_ccxt_symbol(symbol))
         except Exception as e:
+            msg = str(e)
             logging.info("set_leverage not supported or failed: %s", e)
+            if '403' in msg or 'Forbidden' in msg:
+                logging.info("Received 403 from Bybit API - your IP/region may be blocked by CloudFront.\nConsider using Bybit testnet, a VPN, or contacting Bybit support.")
             return {}
 
 
