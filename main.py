@@ -14,7 +14,7 @@ if not API_KEY or not API_SECRET:
     raise RuntimeError("API keys not found in environment variables")
 
 
-from core.binance_client import get_client
+from core.exchange_factory import get_client
 from core.data_loader import get_klines_df
 from core.position_manager import get_position
 from core.trade_executor import open_long, open_short, close_all
